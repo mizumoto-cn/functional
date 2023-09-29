@@ -20,7 +20,7 @@ go get github.com/mizumoto-cn/functional
 
 ```go
 // Compare :: a -> a -> Ordering
-// Ordering = [ Ord.LT | Ord.EQ | Ord.GT ]
+// Ordering = [ types.LT | types.EQ | types.GT ]
 // LT, LE, GT, GE, EQ :: a -> a -> Bool
 // Comparability
 // x <= y || y <= x = True
@@ -36,37 +36,37 @@ type Integer Ord {}
 // Ordering = LT | EQ | GT
 func (i Integer) Compare(j Integer) Ordering {
     if i < j {
-        return Ord.LT
+        return types.LT
     } else if i > j {
-        return Ord.GT
+        return types.GT
     } else {
-        return Ord.EQ
+        return types.EQ
     }
 }
 
 // LT :: a -> a -> Bool
 func (i Integer) LT(j Integer) bool {
-    return i.Compare(j) == Ord.LT
+    return i.Compare(j) == types.LT
 }
 
 // LE :: a -> a -> Bool
 func (i Integer) LE(j Integer) bool {
-    return i.Compare(j) != Ord.GT
+    return i.Compare(j) != types.GT
 }
 
 // GT :: a -> a -> Bool
 func (i Integer) GT(j Integer) bool {
-    return i.Compare(j) == Ord.GT
+    return i.Compare(j) == types.GT
 }
 
 // GE :: a -> a -> Bool
 func (i Integer) GE(j Integer) bool {
-    return i.Compare(j) != Ord.LT
+    return i.Compare(j) != types.LT
 }
 
 // EQ :: a -> a -> Bool
 func (i Integer) EQ(j Integer) bool {
-    return i.Compare(j) == Ord.EQ
+    return i.Compare(j) == types.EQ
 }
 
 ```
@@ -186,13 +186,13 @@ package main
 
 import (
     "fmt"
-    "github.com/mizumoto-cn/functional/types/arraylist"
+    "github.com/mizumoto-cn/functional/types/list"
 )
 
 func main() {
     // ArrayList
-    var a arraylist.ArrayList
-    a = arraylist.NewArrayList(1, 2, 3)
+    var a list.ArrayList
+    a = list.NewArrayList(1, 2, 3)
     fmt.Println(a) // [1 2 3]
     fmt.Println(a.Get(0)) // 1
     fmt.Println(a.Get(1)) // 2
@@ -210,7 +210,7 @@ func main() {
     fmt.Println(a.Length()) // 3
     // null
     fmt.Println(a.Null()) // false
-    fmt.Println(arraylist.NewArrayList().Null()) // true
+    fmt.Println(list.NewArrayList().Null()) // true
     // reverse
     fmt.Println(a.Reverse()) // [3 2 1]
     // drop
@@ -230,11 +230,11 @@ func main() {
     fmt.Println(a.Elem(1)) // true
     fmt.Println(a.Elem(10)) // false
     // range
-    fmt.Println(arraylist.NewRange(0, 1, 10)) // [1 2 3 4 5 6 7 8 9 10]
-    fmt.Println(arraylist.NewRange('a', 'b', 'e')) // [a b c d e]
+    fmt.Println(list.NewRange(0, 1, 10)) // [1 2 3 4 5 6 7 8 9 10]
+    fmt.Println(list.NewRange('a', 'b', 'e')) // [a b c d e]
     // cycle
-    fmt.Println(arraylist.NewCycle([]int{1, 2, 3}).Take(10)).Drop(1)) // [2 3 1 2 3 1 2 3 1]
-    fmt.Println(arraylist.NewCycle([]int{1}).Take(10) // [1 1 1 1 1 1 1 1 1]
+    fmt.Println(list.NewCycle([]int{1, 2, 3}).Take(10)).Drop(1)) // [2 3 1 2 3 1 2 3 1]
+    fmt.Println(list.NewCycle([]int{1}).Take(10) // [1 1 1 1 1 1 1 1 1]
 
 }
 ```
@@ -248,21 +248,21 @@ package main
 
 import (
     "fmt"
-    "github.com/mizumoto-cn/functional/types/arraylist"
+    "github.com/mizumoto-cn/functional/types/list"
     "github.com/mizumoto-cn/functional/utils"
 )
 
 func main() {
     // Map
-    a := arraylist.NewArrayList(1, 2, 3)
+    a := list.NewArrayList(1, 2, 3)
     fmt.Println(utils.Map(a, func(i interface{}) interface{} {
         return i.(int) + 1
     })) // [2 3 4]
     
     // FlatMap
-    a := arraylist.NewArrayList(1, 2, 3)
+    a := list.NewArrayList(1, 2, 3)
     fmt.Println(utils.FlatMap(a, func(i interface{}) interface{} {
-        return arraylist.NewArrayList(i.(int), i.(int) + 1)
+        return list.NewArrayList(i.(int), i.(int) + 1)
     })) // [[1 2] [2 3] [3 4]]
 }
 ```

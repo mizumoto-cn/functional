@@ -118,3 +118,17 @@ func TestInt64GE(t *testing.T) {
 		assert.True(t, types.NewInt64(c.x).GE(types.NewInt64(c.y)) == c.want)
 	}
 }
+
+func TestInt64String(t *testing.T) {
+	cases := []struct {
+		x    int64
+		want string
+	}{
+		{int64(0), "0"},
+		{int64(1), "1"},
+		{int64(-1), "-1"},
+	}
+	for _, c := range cases {
+		assert.True(t, types.NewInt64(c.x).String() == c.want)
+	}
+}

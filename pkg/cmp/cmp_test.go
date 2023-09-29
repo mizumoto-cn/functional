@@ -34,10 +34,11 @@
 package cmp_test
 
 import (
-	"cmp"
 	"math"
 	"sort"
 	"testing"
+
+	"github.com/mizumoto-cn/functional/pkg/cmp"
 )
 
 var negzero = math.Copysign(0, -1)

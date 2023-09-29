@@ -12,35 +12,9 @@ type Maybe[T any] interface {
 	// Matches(func(any) bool) bool
 }
 
-func IsNothing(x any) bool {
-	val := reflect.ValueOf(x)
-	if KindOf(val) == reflect.Ptr {
-		return val.IsNil()
-	}
-	return false
-}
-
-func IsPtr(x any) bool {
-	return KindOf(x) == reflect.Ptr
-}
-
-func PtrOf[T any](x T) *T {
-	return &x
-}
-
-func TypeOf(x any) reflect.Type {
-	return reflect.TypeOf(x)
-}
-
-func KindOf(obj any) reflect.Kind {
-	return reflect.ValueOf(obj).Kind()
-}
-
-func Just(x any) Maybe[any] {
-	if IsNothing(x) {
-		return None
-	}
-	return some[any]{value: x, isNothing: false, isPresent: true}
+func Just[T any](in T) Maybe[T] {
+	isNothing := IsNothing(in)
+	return some[T]{value: in, isNothing: isNothing, isPresent: !isNothing}
 }
 
 // some is a Maybe implementation
